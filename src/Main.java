@@ -1,7 +1,3 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
@@ -19,9 +15,9 @@ public class Main {
         SimpleSpreadSheet ss = new SimpleSpreadSheet();
 
         try {
-            InputStream is = new FileInputStream(new File("./tests/t10.txt"));
-            //ss.solve(new Scanner(System.in));
-            ss.solve(new Scanner(is));
+            //InputStream is = new FileInputStream(new File("./tests/t10.txt"));
+            ss.solve(new Scanner(System.in));
+            //ss.solve(new Scanner(is));
             ss.write(new PrintWriter(System.out));
         } catch (InputMismatchException e) {
             System.out.println("Need valid table dimensions.");
@@ -29,9 +25,9 @@ public class Main {
             System.out.println("Not enough data in input table.");
         } catch (IllegalArgumentException e) {
             System.out.println("Table is too large for english alphabet [A-Z] or digit [1-9]. ");
-        } catch (FileNotFoundException e) {
-            System.out.println("Where is my Spread Sheet?.");
-        }
+        }// catch (FileNotFoundException e) {
+        //  System.out.println("Where is my Spreadsheet?.");
+        //}
 
     }
 

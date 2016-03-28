@@ -206,6 +206,24 @@ public class Tests {
         assert(solver.getResult().get(new CellAddress("A1")) instanceof SimpleSpreadSheetException);
         assert(solver.getResult().get(new CellAddress("A2")) instanceof SimpleSpreadSheetException);
         assert(solver.getResult().get(new CellAddress("B2")) instanceof SimpleSpreadSheetException);
+
+        solver = new DfsSolver(1, 2);
+        input.clear();
+        putInput(input, "A1", "=A2");
+        solver.addCells(input);
+        solver.solve();
+        assert(solver.getResult().get(new CellAddress("A1")) instanceof SimpleSpreadSheetException);
+
+        //pre-solving should solve this.
+        solver = new DfsSolver(1, 3);
+        input.clear();
+        putInput(input, "A1", "1");
+        solver.addCells(input);
+        input.clear();
+        putInput(input, "A2", "=A1");
+        solver.addCells(input);
+        assert(solver.getResult().get(new CellAddress("A2")).equals(1));
+
     }
 
     public static void testSS() {

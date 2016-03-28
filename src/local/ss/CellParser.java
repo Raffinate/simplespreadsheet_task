@@ -36,7 +36,7 @@ public class CellParser {
         try {
             result = Integer.parseInt(data);
         } catch (NumberFormatException e) {
-            return new DataCell(new SimpleSpreadSheetException(ErrorType.PARSE_ERROR, "EINT",
+            return new DataCell(new SimpleSpreadSheetException(ErrorType.PARSE_ERROR, "INT",
                     "Not a valid positive number: " + data + "."));
         }
 

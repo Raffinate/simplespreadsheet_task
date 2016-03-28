@@ -7,6 +7,14 @@ import java.util.Set;
 
 import local.ss.SimpleSpreadSheetException.ErrorType;
 
+/*
+ * Since there can be a lot of empty cells, empty cells that
+ * are passed as input are ignored and every cells that is not
+ * in remaining input is considered as empty implicitly.
+ * Such behavior doesn't affect the result according to current
+ * calculation rules.
+ */
+
 public class DfsSolver {
 
     public DfsSolver(int dimx, int dimy) {
@@ -53,6 +61,7 @@ public class DfsSolver {
 
         openedNodes.add(node);
 
+        assert(cells.containsKey(node));
         Cell cell = cells.get(node);
 
         //        System.out.println("=====solveNode=====");
@@ -65,7 +74,7 @@ public class DfsSolver {
 
         for (CellAddress ca : deps) {
 
-            if (result.containsKey(ca))
+            if (!cells.containsKey(ca))
                 continue;
 
             if (!openedNodes.add(ca)) {
