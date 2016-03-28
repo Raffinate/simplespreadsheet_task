@@ -4,25 +4,29 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Set;
 
-public class EmptyCell implements Cell{
-	
-	static public EmptyCell emptyCell() {
-		return EMPTY;
-	}
-	
-	private EmptyCell (){}
-	
-	public Set<CellAddress> getDependencies() {
-		return new HashSet<CellAddress>();		
-	}
+public class EmptyCell implements Cell {
 
-	public String calculateValue(final Hashtable<CellAddress, Object> vars) {
-		return "";
-	}
-	
-	public String toString() {
-		return "<EMPTY>";
-	}
-	
-	public static final EmptyCell EMPTY = new EmptyCell();
+    static public EmptyCell emptyCell() {
+        return EMPTY;
+    }
+
+    private EmptyCell() {
+    }
+
+    @Override
+    public Set<CellAddress> getDependencies() {
+        return new HashSet<CellAddress>();
+    }
+
+    @Override
+    public String calculateValue(final Hashtable<CellAddress, Object> vars) {
+        return "";
+    }
+
+    @Override
+    public String toString() {
+        return "<EMPTY>";
+    }
+
+    public static final EmptyCell EMPTY = new EmptyCell();
 }

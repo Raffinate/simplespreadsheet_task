@@ -1,5 +1,5 @@
 package local.ss;
 
 public interface IntegerBinaryOperation {
-	public Integer apply(Integer x, Integer y) throws SimpleSpreadSheetException;
+    public Integer apply(Integer x, Integer y) throws SimpleSpreadSheetException;
 }

@@ -1,41 +1,50 @@
 package local.ss;
 
-import java.io.InputStream;
-import java.io.StringBufferInputStream;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.Hashtable;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-
 
 public class Reader {
 
-    public static void main(String[] args) {
-        System.out.println("Hello");
 
-        List<String> result =
-            new Reader(new StringBufferInputStream("\tasd\tbde")).splitNextLine();
-        for (String entry : result) {
-            System.out.println(entry);
-        }
-
+    public Reader(Scanner lineScanner, int dimx) {
+        this.lineScanner = lineScanner;
+        this.dimx = dimx;
+        currentLine = -1;
     }
 
-    public Reader(InputStream is) {
-        lineScanner = new Scanner(is);
-    }
+    public Hashtable<CellAddress, String> processNextLine() {
+        int currentColumn = 0;
 
-    public List<String> splitNextLine() {
+        Hashtable<CellAddress, String> result = new Hashtable<CellAddress,String>();
 
-        if (!lineScanner.hasNext()) {
-            return Collections.<String>emptyList();
+        for (String s : readNextLine()) {
+            //System.out.println(s);
+            result.put(new CellAddress(currentColumn, currentLine), s);
+            currentColumn++;
+            if (currentColumn >= dimx) {
+                break;
+            }
+        }
+        if (currentColumn < dimx) {
+            throw new NoSuchElementException("Not enough columns in table");
         }
 
+        return result;
+    }
+
+    private String[] readNextLine() {
         String line = lineScanner.nextLine();
-        return Arrays.<String>asList(line.split("\t", 10));
+        currentLine++;
+        return splitLine(line);
     }
 
-    //private Pattern columnDelimiter = Pattern.compile("\t");
+    private String[] splitLine(String line) {
+        return line.split("\t",-1);
+    }
+
+    // private Pattern columnDelimiter = Pattern.compile("\t");
     private Scanner lineScanner;
+    private int dimx;
+    private int currentLine;
 }
