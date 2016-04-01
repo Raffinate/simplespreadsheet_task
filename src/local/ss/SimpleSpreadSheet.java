@@ -22,7 +22,7 @@ public class SimpleSpreadSheet {
         }
 
         Reader reader = new Reader(s, dimx);
-        DfsSolver solver = new DfsSolver(dimx, dimy);
+        DfsSolver solver = new DfsSolver();
 
         for (int i = 0; i < dimy; ++i) {
             Hashtable<CellAddress, String> line = reader.processNextLine();

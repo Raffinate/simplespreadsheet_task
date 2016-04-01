@@ -17,9 +17,7 @@ import local.ss.SimpleSpreadSheetException.ErrorType;
 
 public class DfsSolver {
 
-    public DfsSolver(int dimx, int dimy) {
-        this.dimx = dimx;
-        this.dimy = dimy;
+    public DfsSolver() {
         this.cells = new Hashtable<CellAddress, Cell>();
         this.result = new Hashtable<CellAddress, Object>();
     }
@@ -31,11 +29,11 @@ public class DfsSolver {
         for (Entry<CellAddress, String> element : inputTable) {
             CellAddress addr = element.getKey();
             String data = element.getValue();
-            if ((!data.isEmpty()) && (addressInRange(addr))) {
+            if ((!data.isEmpty())){ //&& (addressInRange(addr))) {
                 Cell cell = CellParser.parse(data);
                 Set<CellAddress> deps = cell.getDependencies();
 
-                if ((!addressesInRange(deps)) || (calculatedVars.containsAll(deps))) {
+                if (calculatedVars.containsAll(deps)) {
                     //System.out.println("Fast adding: " + cell);
                     result.put(addr, cell.calculateValue(result));
                 } else {
@@ -95,26 +93,10 @@ public class DfsSolver {
         return;
     }
 
-    private boolean addressInRange(CellAddress address) {
-        return (address.getColumn() < dimx) && (address.getRow() < dimy);
-    }
-
-    private boolean addressesInRange(Set<CellAddress> addresses) {
-        for (CellAddress addr : addresses) {
-            if (!addressInRange(addr)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     @Override
     public String toString() {
         return cells.toString() + result.toString();
     }
-
-    private int dimx;
-    private int dimy;
 
     private Hashtable<CellAddress, Cell> cells;
     private Hashtable<CellAddress, Object> result;

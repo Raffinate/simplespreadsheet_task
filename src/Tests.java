@@ -165,7 +165,7 @@ public class Tests {
 
     public static void testSolver() {
         Hashtable<CellAddress, String> input = new Hashtable<>();
-        DfsSolver solver = new DfsSolver(4, 3);
+        DfsSolver solver = new DfsSolver();
 
         //Testing default input case
         putInput(input, "A1", "12");
@@ -188,7 +188,7 @@ public class Tests {
 
         //Testing self recursion
         putInput(input, "A1", "=A1");
-        solver = new DfsSolver(4,3);
+        solver = new DfsSolver();
 
         solver.addCells(input);
         solver.solve();
@@ -198,7 +198,7 @@ public class Tests {
         assert(solver.getResult().get(new CellAddress("B2")) instanceof SimpleSpreadSheetException);
 
         putInput(input, "A1", "=b2");
-        solver = new DfsSolver(4,3);
+        solver = new DfsSolver();
 
         solver.addCells(input);
         solver.solve();
@@ -207,7 +207,7 @@ public class Tests {
         assert(solver.getResult().get(new CellAddress("A2")) instanceof SimpleSpreadSheetException);
         assert(solver.getResult().get(new CellAddress("B2")) instanceof SimpleSpreadSheetException);
 
-        solver = new DfsSolver(1, 2);
+        solver = new DfsSolver();
         input.clear();
         putInput(input, "A1", "=A2");
         solver.addCells(input);
@@ -215,7 +215,7 @@ public class Tests {
         assert(solver.getResult().get(new CellAddress("A1")) instanceof SimpleSpreadSheetException);
 
         //pre-solving should solve this.
-        solver = new DfsSolver(1, 3);
+        solver = new DfsSolver();
         input.clear();
         putInput(input, "A1", "1");
         solver.addCells(input);
@@ -255,8 +255,6 @@ public class Tests {
             assert(ba.toString().equals(results[i]));
             ++i;
         }
-
-
     }
 
     private static void putInput(Hashtable<CellAddress, String> input, String addr, String data) {
