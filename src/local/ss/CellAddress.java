@@ -3,6 +3,15 @@ package local.ss;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * CellAddress class checks and stores Spreadsheet cell address.
+ * Address is either a [A-Za-z][1-9] string where
+ * lower-case letters are the same as upper-case analogs,
+ * or two integers (column and row), where column is in [0,25] range
+ * and row is in [0,8] range. Letters correspond to columns.
+ *
+ */
+
 public final class CellAddress {
 
     public CellAddress(final String cell) {

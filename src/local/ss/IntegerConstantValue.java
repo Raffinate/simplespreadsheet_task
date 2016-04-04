@@ -1,22 +1,28 @@
 package local.ss;
 
+import java.math.BigInteger;
 import java.util.Hashtable;
+
+/**
+ * IntegerConstantValue stores integer constants for
+ * expression evaluation.
+ */
 
 public class IntegerConstantValue implements IntegerValue {
 
-    public IntegerConstantValue(final int value) {
+    public IntegerConstantValue(final BigInteger value) {
         this.value = value;
     }
 
     @Override
-    public Integer getValue(Hashtable<CellAddress, Object> vars) {
+    public BigInteger getValue(Hashtable<CellAddress, Object> vars) {
         return value;
     }
 
     @Override
     public String toString() {
-        return Integer.toString(value);
+        return value.toString(10);
     }
 
-    private final Integer value;
+    private final BigInteger value;
 }

@@ -4,6 +4,12 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Set;
 
+/**
+ * DataCell stores data that is not an expression.
+ * Since it is not an expression and doesn't need to be calculated
+ * DataCell stores data that will later be placed in result table.
+ */
+
 public class DataCell implements Cell {
 
     public DataCell(final Object data) {

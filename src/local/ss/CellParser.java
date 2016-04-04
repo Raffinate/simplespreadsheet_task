@@ -1,6 +1,12 @@
 package local.ss;
 
+import java.math.BigInteger;
+
 import local.ss.SimpleSpreadSheetException.ErrorType;
+
+/**
+ * CellParser converts string representation of the cell to cell.
+ */
 
 public class CellParser {
 
@@ -32,15 +38,15 @@ public class CellParser {
     }
 
     private static Cell parseInteger(final String data) {
-        int result = 0;
+        BigInteger result = BigInteger.ZERO;
         try {
-            result = Integer.parseInt(data);
+            result = new BigInteger(data);
         } catch (NumberFormatException e) {
             return new DataCell(new SimpleSpreadSheetException(ErrorType.PARSE_ERROR, "INT",
                     "Not a valid positive number: " + data + "."));
         }
 
-        return new DataCell(new Integer(result));
+        return new DataCell(result);
 
     }
 

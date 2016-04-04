@@ -1,5 +1,11 @@
 package local.ss;
 
+import java.math.BigInteger;
+
+/**
+ * Interface for internal binary operations on integers.
+ */
+
 public interface IntegerBinaryOperation {
-    public Integer apply(Integer x, Integer y) throws SimpleSpreadSheetException;
+    public BigInteger apply(BigInteger x, BigInteger y) throws SimpleSpreadSheetException;
 }

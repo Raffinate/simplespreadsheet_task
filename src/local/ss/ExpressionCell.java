@@ -3,6 +3,11 @@ package local.ss;
 import java.util.Hashtable;
 import java.util.Set;
 
+/**
+ * ExpressionCell represent a cell that we need to calculate.
+ * It use vars to get values of another Cells that are used in expression.
+ */
+
 public class ExpressionCell implements Cell {
 
     public ExpressionCell(ExpressionCalculator calculator) {

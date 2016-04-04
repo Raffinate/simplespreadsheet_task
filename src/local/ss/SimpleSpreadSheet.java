@@ -5,16 +5,31 @@ import java.util.Hashtable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Basic class that reads and solve spreadsheet,
+ * accumulates the result and writes result
+ * result of spreadsheet calculations.
+ * Numbers are considered as BigIntegers, so
+ * large numbers should not overflow.
+ */
+
 public class SimpleSpreadSheet {
     public SimpleSpreadSheet() {
+        init();
+    }
+
+    private void init() {
         dimx = 0;
         dimy = 0;
         result = new Hashtable<>();
     }
 
     public void solve(Scanner s) {
+        init();
+
         dimy = s.nextInt();
         dimx = s.nextInt();
+
         s.nextLine();
 
         if ((dimy <= 0) || (dimx <= 0)) {

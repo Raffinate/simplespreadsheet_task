@@ -7,12 +7,13 @@ import java.util.Set;
 
 import local.ss.SimpleSpreadSheetException.ErrorType;
 
-/*
+/**
+ * Depth first search solver.
  * Since there can be a lot of empty cells, empty cells that
- * are passed as input are ignored and every cells that is not
+ * are passed as input are ignored and every possible cells that is not
  * in remaining input is considered as empty implicitly.
  * Such behavior doesn't affect the result according to current
- * calculation rules.
+ * calculation rules but reduces internal calculations.
  */
 
 public class DfsSolver {

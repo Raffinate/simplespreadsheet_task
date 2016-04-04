@@ -1,8 +1,15 @@
 package local.ss;
 
+import java.math.BigInteger;
 import java.util.Hashtable;
 import java.util.Set;
 import java.util.Stack;
+
+/**
+ * ExpressionCalculator stores and expression as parsed
+ * Stacks of IntegerValues and BinaryOperations and
+ * Cells that are used to calculate the expression.
+ */
 
 public class ExpressionCalculator {
 
@@ -13,7 +20,7 @@ public class ExpressionCalculator {
         this.dependencies = dependencies;
     }
 
-    public Integer calculate(Hashtable<CellAddress, Object> vars) throws SimpleSpreadSheetException {
+    public BigInteger calculate(Hashtable<CellAddress, Object> vars) throws SimpleSpreadSheetException {
 
         while (!operations.isEmpty()) {
             if (values.size() < 2) {

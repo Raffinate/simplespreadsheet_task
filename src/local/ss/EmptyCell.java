@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Set;
 
+/**
+ * EmptyCell represent empty cells.
+ */
+
 public class EmptyCell implements Cell {
 
     static public EmptyCell emptyCell() {

@@ -1,5 +1,11 @@
 package local.ss;
 
+/**
+ * SimpleSpreadSheetException is thrown when
+ * errors in simple spreadsheet and used to represent
+ * error values in result table.
+ */
+
 public class SimpleSpreadSheetException extends Exception {
 
     public enum ErrorType {
@@ -31,7 +37,7 @@ public class SimpleSpreadSheetException extends Exception {
         case DIVISION_ERROR:
             return "DIVBY0";
         case TYPE_ERROR:
-            return "NOTINT";
+            return "EVAR";
         case CYCLE_ERROR:
             return "RECUR";
         }

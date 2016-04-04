@@ -4,6 +4,10 @@ import java.util.Hashtable;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Reader is used to read spreadsheet line by line.
+ */
+
 public class Reader {
 
 

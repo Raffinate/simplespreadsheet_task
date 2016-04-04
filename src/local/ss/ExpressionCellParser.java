@@ -1,5 +1,6 @@
 package local.ss;
 
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
@@ -7,6 +8,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import local.ss.SimpleSpreadSheetException.ErrorType;
+
+/**
+ * ExpressionCellParser is a
+ * deterministic finite state automata is used to
+ * parse an expression to internal ExpressionCalculator representation.
+ * finite state automata is used here because expression grammar is simple.
+ * Order of evaluation is from left to right in expression.
+ */
 
 public class ExpressionCellParser {
 
@@ -64,61 +73,16 @@ public class ExpressionCellParser {
 
         switch (op) {
         case '+':
-            binOp = new IntegerBinaryOperation() {
-                @Override
-                public Integer apply(Integer x, Integer y) throws SimpleSpreadSheetException {
-                    return x + y;
-                }
-
-                @Override
-                public String toString() {
-                    return "+";
-                }
-            };
+            binOp = getAdditionOperation();
             break;
         case '-':
-            binOp = new IntegerBinaryOperation() {
-                @Override
-                public Integer apply(Integer x, Integer y) throws SimpleSpreadSheetException {
-                    return x - y;
-                }
-
-                @Override
-                public String toString() {
-                    return "-";
-                }
-
-            };
+            binOp = getSubtractionOperation();
             break;
         case '*':
-            binOp = new IntegerBinaryOperation() {
-                @Override
-                public Integer apply(Integer x, Integer y) throws SimpleSpreadSheetException {
-                    return x * y;
-                }
-
-                @Override
-                public String toString() {
-                    return "*";
-                }
-
-            };
+            binOp = getMultiplicationOperation();
             break;
         case '/':
-            binOp = new IntegerBinaryOperation() {
-                @Override
-                public Integer apply(Integer x, Integer y) throws SimpleSpreadSheetException {
-                    if (y == 0) {
-                        throw new SimpleSpreadSheetException(ErrorType.DIVISION_ERROR, "Division by zero.");
-                    }
-                    return x / y;
-                }
-
-                @Override
-                public String toString() {
-                    return "/";
-                }
-            };
+            binOp = getDivisionOperation();
             break;
         default:
             throw new SimpleSpreadSheetException(ErrorType.EXPRESSION_ERROR, "\'" + expr.charAt(0) + "\'",
@@ -156,7 +120,13 @@ public class ExpressionCellParser {
 
             substrPosition = numberMatcher.end();
             String numberString = expr.substring(0, substrPosition);
-            values.push(new IntegerConstantValue(Integer.parseInt(numberString)));
+            BigInteger value = BigInteger.valueOf(0);
+            try {
+                value = new BigInteger(numberString);
+            } catch (NumberFormatException e) {
+                assert(false);
+            }
+            values.push(new IntegerConstantValue(value));
         }
 
         String restExpr = expr.substring(substrPosition);
@@ -171,6 +141,10 @@ public class ExpressionCellParser {
     }
 
     private ExpressionCalculator parseFinish() {
+        //We reverse stacks here because all operation priorities
+        //are the same. This creates different results depending of
+        //calculation order. Reversing stacks makes left's operation
+        //priority higher (as in task example).
         Stack<IntegerValue> vals = reverseStack(values);
         Stack<IntegerBinaryOperation> ops = reverseStack(operations);
 
@@ -194,6 +168,65 @@ public class ExpressionCellParser {
         }
 
         return ns;
+    }
+
+    private static IntegerBinaryOperation getAdditionOperation() {
+        return new IntegerBinaryOperation() {
+            @Override
+            public BigInteger apply(BigInteger x, BigInteger y) throws SimpleSpreadSheetException {
+                return x.add(y);
+            }
+
+            @Override
+            public String toString() {
+                return "+";
+            }
+        };
+    }
+
+    private static IntegerBinaryOperation getSubtractionOperation() {
+        return new IntegerBinaryOperation() {
+            @Override
+            public BigInteger apply(BigInteger x, BigInteger y) throws SimpleSpreadSheetException {
+                return x.subtract(y);
+            }
+
+            @Override
+            public String toString() {
+                return "-";
+            }
+        };
+    }
+
+    private static IntegerBinaryOperation getMultiplicationOperation() {
+        return new IntegerBinaryOperation() {
+            @Override
+            public BigInteger apply(BigInteger x, BigInteger y) throws SimpleSpreadSheetException {
+                return x.multiply(y);
+            }
+
+            @Override
+            public String toString() {
+                return "*";
+            }
+        };
+    }
+
+    private static IntegerBinaryOperation getDivisionOperation() {
+        return new IntegerBinaryOperation() {
+            @Override
+            public BigInteger apply(BigInteger x, BigInteger y) throws SimpleSpreadSheetException {
+                if (y.equals(BigInteger.ZERO)) {
+                    throw new SimpleSpreadSheetException(ErrorType.DIVISION_ERROR, "Division by zero.");
+                }
+                return x.divide(y);
+            }
+
+            @Override
+            public String toString() {
+                return "/";
+            }
+        };
     }
 
     private ParserState state;
